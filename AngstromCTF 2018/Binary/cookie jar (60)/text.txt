@@ -1,0 +1,4 @@
+Note: Binary has been updated Try to break this Cookie Jar that was compiled from this source Once you've pwned the binary,
+test it out by connecting to nc shell.angstromctf.com 1234 to get the flag.
+
+hint: Look up some vulnerabilities associated with buffers.

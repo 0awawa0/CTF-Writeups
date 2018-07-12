@@ -1,0 +1,4 @@
+Here's some binary and source. Navigate to /problems/roptothetop/ on the shell server to try your exploit out!
+
+hint: Look up "Return Oriented Programming" (ROP) vulnerabilities
+and figure out how you might be able to change the return address.
