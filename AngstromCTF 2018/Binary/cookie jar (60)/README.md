@@ -1,12 +1,13 @@
-#cookie jar
+# cookie jar
 
-###Description
+### Description
+
 Try to break this Cookie Jar that was compiled from this source Once you've pwned the binary,
 test it out by connecting to nc shell.angstromctf.com 1234 to get the flag.
 
 hint: Look up some vulnerabilities associated with buffers.
 
-###Solivng
+### Solivng
 I have the binary and the source code. First, I will try to run binary to see what am I working with:
 
 <pre><font color="#EF2929"><b>root@kali</b></font>:<font color="#729FCF"><b>/mnt/hgfs/Shared</b></font># ./cookiePublic64

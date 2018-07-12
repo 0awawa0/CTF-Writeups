@@ -1,13 +1,15 @@
-#accumulator
+# accumulator
 
-###Description
+### Description
+
 I found this program (accumulator64 file) that lets me add positive numbers to a variable,
 but it won't give me a flag unless that variable is negative! Can you help me out?
 Navigate to /problems/accumulator/ on the shell server to try your exploit out!
 
 hint: How many bytes can an int store? How are positive and negative numbers represented in C?
 
-###Solving
+### Solving
+
 Okay, we have the binary file and a source code. The flag is on the remote server that runs given binary. So we need to find and exploit the binary's vulnerability. Let's do this.
 
 First, let's try to run the binary.
