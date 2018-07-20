@@ -1,4 +1,0 @@
-Ian loves playing number guessing games, so he went ahead and wrote one himself (source).
-I hope it doesn't have any vulns. The service is running at nc shell.angstromctf.com 1235.
-
-hint: Look up some vulnerabilities associated with the printf function.
