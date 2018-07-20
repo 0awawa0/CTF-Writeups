@@ -18,7 +18,7 @@ Now copying input...
 Done!
 </pre>
 
-So the program takes one string argument and just does something with it. Now let's seee the source code.
+So the program takes one string argument and just does something with it. Now let's see the source code.
 ```C
 #include <stdlib.h>
 #include <string.h>
@@ -52,17 +52,17 @@ int main (int argc, char **argv){
 }
 ```
 
-The program is actually copies the input to the buffer (destination variable). Still, as I can see, there is no limitation for the input, but the buffer has only 32 bytes of length. So, I can overflow the buffer. Another important thing is that there is a function "the_top" which actually prints the flag. Now I need to figure out how can I use the buffer overflowing to call "the_top", so I can get the flag.
+The program actually copies the input to the buffer (destination variable). Still, as I can see, there is no limitation for the input, but the buffer has only 32 bytes in length. So, I can overflow the buffer. Another important thing is that there is a function "the_top" which actually prints the flag. Now I need to figure out how can I use the buffer overflow to call "the_top", so I can get the flag.
 
-I decided to look this program in the IDA. I found function "fun_copy" and looked into it's stack. Here's the destination variable's start:
+I decided to look at this program in the IDA. I found function "fun_copy" and looked into its stack. Here's the destination variable's start
 
 ![dest_starts](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/rop%20to%20the%20top%20(130)/src/dest_starts.PNG)
 
-I need the buffer's start offset. It's -28h. And here I see the end of the buffer and the main thing is that here you can see the variable called 'r'. It's a return address (the address of the command that will be executed after the function finishes it's work). And I can rewrite it's value, overflowing the buffer.
+I need the buffer's start offset. It's -28h. And here I see the end of the buffer and the main thing is that here you can see the variable called 'r'. It's a return address (the address of the command that will be executed after the function finishes it's work). And I can rewrite its value, overflowing the buffer.
 
 ![return_address](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/rop%20to%20the%20top%20(130)/src/return_offset.PNG)
 
-And I need it's offset too. It's +04h. So, there is ```4h-(-28h)=2Ch=44``` bytes from the start of the buffer and to the start of the return address. Now, I need to write 44 bytes to the input and 4 more bytes to rewrite return address.
+And I need its offset too. It's +04h. So, there is ```4h-(-28h)=2Ch=44``` bytes from the start of the buffer and to the start of the return address. Now, I need to write 44 bytes to the input and 4 more bytes to rewrite return address.
 
 Next, I found the function's "the_top" address. Here you can see it (08 04 84 DB):
 
