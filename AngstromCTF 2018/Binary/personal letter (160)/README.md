@@ -169,21 +169,21 @@ Now, what can we do with this? There is a function printFlag(), so it would be g
 
 First, I disassemble the program using IDA and find the function's printFlag() address:
 
-![printFlag_address](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/printFlag_address.PNG)
+![printFlag_address](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/printFlag_address.PNG)
 
 So it is 0804872b. Next, we will find a function, which address we will rewrite. Here on the screen you can see that after printCard() function there are two more calls: puts() and exit(). We will rewrite exit() function's address. Actually you could ask, why don't we rewrite puts() address. I'll be fair, it won't work if with puts() function, and I don't know why for sure. I guess it's because of different work with stack in exit() and puts() functions.
 
 Okay, I click the exit() function's name and I see this:
 
-![exit_address1](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/exit_address1.PNG)
+![exit_address1](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/exit_address1.PNG)
 
-![exit_address2](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/exit_address2.PNG)
+![exit_address2](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/exit_address2.PNG)
 
 It's just redirect, double click on the offset and here we see the address (08 04 a0 30) were stores 4 bytes of exit() function's real address:
 
-![exit_address3](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/exit_address3.PNG)
+![exit_address3](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/exit_address3.PNG)
 
-![exit_address4](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/exit_address4.PNG)
+![exit_address4](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/exit_address4.PNG)
 
 It is stored like this c8 a0 04 08, so we need to rewrite first 2 bytes to get 2b 87 04 08 and this address will be printFlag() function's address and instead of exit() function the program will call printFlag().
 
@@ -191,11 +191,11 @@ Now we know what we have got to do. First part of input will be like this "\x30\
 
 First we need to find digit2 and digit4. Those are indexes of digits we will write to addresses. So how will we find them? We will debug the program with stop point on the printf() function call. And then we will inspect printCard() function's frame of stack to find them.
 
-![printfStopPoint](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/printfStopPoint.PNG)
+![printfStopPoint](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/printfStopPoint.PNG)
 
-![stackView](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/stackView.PNG)
+![stackView](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/stackView.PNG)
 
-![inputStackAddress](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(130)/src/inputStackAddress.PNG)
+![inputStackAddress](https://raw.githubusercontent.com/0awawa0/CTF-Writeups/master/AngstromCTF%202018/Binary/personal%20letter%20(160)/src/inputStackAddress.PNG)
 
 Here on the screenshots we see that our input are stored at indexes 26 and 27 in the printCard() stack. Now we need to find digit1 and digit3. In the stack are stored 16 bytes: "| Dear, " - it's first 8 and our input will be 8 bytes too. So now we have 16 bytes. It's 10h, and we need 2bh, so the digit1 will be 2bh-10h=1bh=27. Next, we will need 87h, but we have 2b. digit3 will be 87h-2bh=5ch=92. Now we have our input: \x30\xa0\x04\x08\x31\xa0\x04\x08%27x%26\$hhn%92x%27\$hhn. But we can't write bytes from keyboard so I will use echo -e. Let's try it.
 <pre><font color="#EF2929"><b>root@kali</b></font>:<font color="#729FCF"><b>/mnt/hgfs/Shared</b></font># echo -e &quot;\x30\xa0\x04\x08\x31\xa0\x04\x08%27x%26\$hhn%92x%27\$hhn&quot; | ./personal_letter32
