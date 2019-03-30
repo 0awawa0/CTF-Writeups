@@ -64,17 +64,11 @@ data = data.replace("Comma", ',')
 data = data.replace(')', '').replace('(', '').strip()
 dat = [i.split(',') for i in data.split('\n')]
 
-for i in range(len(dat)):
-	try:
-		int(dat[i][0].strip())
-	except:
-		print()
 coordinates = [(int(dat[i][0].strip()), int(dat[i][1].strip())) for i in range(len(dat))]
 colors = [wrap(dat[i][2].replace('#', '').strip(), 2) for i in range(len(dat))]
 width = max([coordinates[i][0] for i in range(len(coordinates))])
 heigth = max([coordinates[i][1] for i in range(len(coordinates))])
-print(width)
-print(heigth)
+
 img = Image.new('RGB', (width+1, heigth+1))
 pixels = img.load()
 
