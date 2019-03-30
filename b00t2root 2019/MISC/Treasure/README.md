@@ -4,7 +4,7 @@
 
 ![task](./src/task.png)
 
-[file](./src/file)
+[file](./src/treasure)
 
 ## Solution
 
