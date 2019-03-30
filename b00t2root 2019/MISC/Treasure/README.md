@@ -24,4 +24,4 @@ Ha, it's a game for GameBoy. I've download emulator and ran this.
 
 ![flag](./src/flag.png)
 
-The tasks sais that passcode is under the flag, so it's 58DPY. Wrap it in flag format and here it is: b00t2root{58DPY}
+The tasks says that passcode is under the flag, so it's 58DPY. Wrap it in flag format and here it is: b00t2root{58DPY}
