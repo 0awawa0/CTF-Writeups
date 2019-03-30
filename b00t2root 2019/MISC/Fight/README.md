@@ -12,7 +12,7 @@ We are given the text file. Let's look inside.
 
 ![ordinate](./src/ordinate.png)
 
-Here we can see thousands of rows. Every row consists by `OpenParentheses`, `CloseParentheses`, `Comma`, `numbers from 0 up to 9 written in words`, `#` and `hex numbers`. Let's try to replace words with characters with the following script:
+Here we can see thousands of rows. Every row consists of `OpenParentheses`, `CloseParentheses`, `Comma`, `numbers from 0 up to 9 written in words`, `#` and `hex numbers`. Let's try to replace words with characters with the following script:
 
 ```Python
 with open("ordinate.txt", 'r') as f:
