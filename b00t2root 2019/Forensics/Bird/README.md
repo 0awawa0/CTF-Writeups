@@ -1,6 +1,6 @@
 # I'll not let you get
 
-English version is coming soon
+[Русская версия](./README_ru.md)
 
 ## Problem
 
@@ -10,23 +10,23 @@ English version is coming soon
 
 ## Solution
 
-Итак, у нас есть файлик, который вроде png, но чёт не открывается. Смотрим в хексы:
+So we have the file wich looks like png, but it won't open. Opening it with 010Editor:
 
 ![bird_hex](./src/bird_hex.png)
 
-Ага, gimp. Ну давайте откроем через Gimp.
+Aha, gimp. Okay, let's open it with Gimp:
 
 ![gimp](./src/gimp.png)
 
-Во, а вот и птичка) Но интересует нас не она, а то, что лежит под ней. А там у нас какой-то текст:
+Hey, and here's the bird! But we are more interested in something under the bird. Here we see some text:
 
 ![gimp_code](./src/gimp_code.png)
 
-Нифига не понятно что там написано, но его можно скопировать и вставить в тхт файлик.
+I can't see anything here, but I can copy this text to the .txt file.
 
 ![code](./src/code.png)
 
-Так, ну во-первых видим, что это хексы, да не просто хексы, а файлик .class, то есть это байт код Java (заголовок CAFEBABE). Быстренько пишем скрипт, чтобы отрезать первый столбик (это просто адреса, если кто не заметил).
+Okay, first, we see that it's some hex. Moreover, it's Java .class file (CAFEBABE header). Quickly coding small script to cut first column (it contains just adresses).
 
 ```Python
 with open("code.txt", "r") as f:
@@ -41,21 +41,19 @@ with open("code.class", "wb") as f:
 	f.write(bytes.fromhex(code))
 ```
 
-Вроде бы вот оно счастье, декомпилим теперь и получаем...
+Try to decompile this file wouldn't give us a thing:
 
 ![decompile_fail](./src/decompile_fail.png)
 
-null, ха, что ж не так-то? Заглянем в хексы класса:
+Well, let's watch that hex again.
 
 ![wrong_class](./src/wrong_class.png)
 
-Так, если посмотреть повнимательней, то видно, что некоторые байтики стоят как бы не на месте. На самом деле они поменялись местами с другими байтами (это хорошо видно на строках).
+If you look closely, you can see that some bytes switched places with nearby byte (you can see it on the strings). Hmmm, so I need to recover it. But finding bytes, that are not on its place and move it back isn't a trivial task. After some more thinking I thought: what if it's not bytes that swapped, but it's columns of bytes. Now the problem seems easier.
 
-Здесь мне стало плохо. Вручную переставлять байты там, где они не на месте, это не самое приятное занятие, а как написать скрипт - непонятно. Дальше я предположил, что поменялись местами не отдельные байты, а целые столбцы байтов. Тут уже стало легче.
+Fine, now I need to find out what columns are swaped. That was actually easy. I just recovered strings. For example, instead of `niti` there should be `init`. So I need to swap 6 column with 7 columns and 8 with 9. Recovering other strings, I found out that we should swap all neighboring columns such as 0 with 1, 2 with 3, 4 with 5 and so on. But save the header, cause it's ok.
 
-Так, теперь надо разобраться какие столбцы с какими надо менять местами. Ну вот вместо niti в 3 строке, наверное должно быть init. Значит надо поменять местами 6 с 7 столбцы, и 8 с 9. Анализируя таким образом остальной код стало понятно что надо менять местами 0 с 1, 2 с 3, 4 с 5 и т.д. все столбцы хекса. Только в первой строке первые 4 байта должны остаться на своих местах т.к. это заголовок, и с ним изначально всё ОК.
-
-Скрипт для перестановок выглядит вот так:
+Here's a full script:
 
 ```Python
 from textwrap import wrap
@@ -94,7 +92,6 @@ new_lines[0][1] = 'fe'
 new_lines[0][2] = 'ba'
 new_lines[0][3] = 'be'
 
-new_lines[-1][0]
 hex_code = "".join(["".join(i) for i in new_lines])
 
 with open("new_class.class", "wb") as f:
@@ -102,15 +99,15 @@ with open("new_class.class", "wb") as f:
 
 ```
 
-В итоге получаем такой вот хекс:
+At the and we have following hex:
 
 ![good_class](./src/good_class.png)
 
-Декомпилируем:
+Decompile it:
 
 ![decompile_success](./src/decompile_success.png)
 
-Вот, вычисляем результат работы кода и получаем флаг:
+Here, just run this code to get the flag.
 
 ![flag](./src/flag.png)
 
