@@ -2,7 +2,7 @@
 
 ## Task
 
-![task](./src/task.png)
+![task](./src/task.PNG)
 
 [app.py](./src/app.py)
 
@@ -98,6 +98,6 @@ if __name__ == "__main__":
 
 Run it and here we go:
 
-![flag](./src/flag.png)
+![flag](./src/flag.PNG)
 
 Flag: `HSE{8RrrR4cK3t_P0O0w3rrr}`
