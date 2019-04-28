@@ -1,7 +1,5 @@
 import socket
 
-1001101
-1001101
 
 def to_brackets(number: int):
 	bint = bin(number)[2:]
