@@ -12,7 +12,7 @@ We are given some binary. I don't wanna run it, but I wanna watch what's inside.
 
 ![ida_main](./src/ida_main.png)
 
-What do we see? First, the program asks for input at line 10. After that the program checks if we it's  being debugged. If it is, variable `v4` at line 15 will be 1, if it's not - 16. So we should not debug it. At line 15 the space for our input is being allocated, at line 16 it's filled with `0`. And at line 17 the program reads input from the stdin.
+What do we see? First, the program asks for input at line 10. After that the program checks if it's  being debugged. If it is, variable `v4` at line 15 will be 1, if it's not - 16. So we should not debug it. At line 15 the space for our input is being allocated, at line 16 it's filled with `0`. And at line 17 the program reads input from the stdin.
 
 After that input goes through several checks, and if it passes all of them the programm will print the flag. Next I will analyze variables and functions and rename them just to make it easier to read the code.
 
