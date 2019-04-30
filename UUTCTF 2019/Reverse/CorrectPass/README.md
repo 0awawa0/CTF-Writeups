@@ -8,7 +8,7 @@
 
 ## Solution
 
-We are given some binary. I don't wanna run, but I wanna watch what's inside. So let's throw it to IDA.
+We are given some binary. I don't wanna run it, but I wanna watch what's inside. So let's throw it to IDA.
 
 ![ida_main](./src/ida_main.png)
 
