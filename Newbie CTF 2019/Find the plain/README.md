@@ -39,3 +39,9 @@ Ok, now I decrypt the data
 ![decrypt](./src/decrypt.png)
 
 The flag must be `KorNewbie{root_d459bdb6f5c094f2efdacfb9527e81fe}`, although I can't check it because the CTF have been paused for a 15 hours by now =)
+
+The flag is actually the cracked boss name concatenated with the ftp password `root`
+
+![crack](./src/md5_cracked.png)
+
+`KorNewbie{root_IronDragon`
